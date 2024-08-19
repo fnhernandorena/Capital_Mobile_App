@@ -4,6 +4,7 @@ export async function StartDB(){
     const db = SQLite.openDatabaseSync('capital.db');
     await db.execAsync(`
         PRAGMA journal_mode = WAL;
+        --DROP TABLE IF EXISTS properties;
         CREATE TABLE IF NOT EXISTS properties (id INTEGER PRIMARY KEY NOT NULL, title VARCHAR(255) NOT NULL, value INTEGER NOT NULL, address VARCHAR(255) NOT NULL, rooms INTEGER NOT NULL, bathrooms INTEGER NOT NULL, garage_capacity INTEGER NOT NULL);
         `);
 }
@@ -16,7 +17,7 @@ export async function GetProperties(){
 
 export async function CreatePropertie(title, value, address, rooms, bathrooms, garageCapacity) {
     const db = SQLite.openDatabaseSync('capital.db');
-    if (title && value != null && address && rooms != null && bathrooms != null && garageCapacity != null) {
+    if (title != null && value != null && address != null && rooms != null && bathrooms != null && garageCapacity != null) {
         try {
             await db.runAsync(`
                 INSERT INTO properties (title, value, address, rooms, bathrooms, garage_capacity)
@@ -48,6 +49,22 @@ export async function DeleteProperty(id){
             console.log('Property deleted successfully', id);
         } catch (error) {
             console.error('Error deleting property:', error);
+        }
+    } else {
+        console.error('ID is invalid:', id);
+    }
+}
+export async function GetPropertyById(id) {
+    const db = SQLite.openDatabaseSync('capital.db');
+    if (id) {
+        try {
+            console.log(id)
+            const property = await db.getAllAsync(`
+                SELECT * FROM properties WHERE id = $id;
+            `, { $id: id });
+            return property[0];
+        } catch (error) {
+            console.error('Error retrieving property:', error);
         }
     } else {
         console.error('ID is invalid:', id);

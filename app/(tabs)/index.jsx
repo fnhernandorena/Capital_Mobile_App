@@ -49,14 +49,23 @@ export default function Index() {
                         <View key={propertie.id}>
                             <Text>{propertie.title}</Text>
                             <Text>Value: {propertie.value}</Text>
-                            <Button title="Edit" onPress={()=>deletePropertie(propertie.id)}/>
+                            <Text>Address: {propertie.address}</Text>
+                            <Text>Rooms: {propertie.rooms}</Text>
+                            <Text>Bathrooms: {propertie.bathrooms}</Text>
+                            <Text>Garage capacity: {propertie.garage_capacity}</Text>
+                            <Link href={{
+                                pathname: '/properties/[id]',
+                                params: { id: propertie.id },
+                            }}>
+                                <Text>Edit</Text>
+                            </Link>
                             <Button title="Delete" onPress={()=>deletePropertie(propertie.id)}/>
                         </View>
                     ))}
                 </ScrollView>
             )}
 
-            <Link asChild href='/createPropertie'>
+            <Link asChild href='/properties/createPropertie'>
                 <Pressable className='bg-gray-500/30 items-center flex p-1 rounded-3xl mb-1'>
                     <FontAwesome name="plus-circle" size={24} color="black" />  
                 </Pressable>
