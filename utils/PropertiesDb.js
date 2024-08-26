@@ -70,3 +70,34 @@ export async function GetPropertyById(id) {
         console.error('ID is invalid:', id);
     }
 }
+
+export async function UpdateProperty(id, title, value, address, rooms, bathrooms, garageCapacity) {
+    const db = SQLite.openDatabaseSync('capital.db');
+    if (id && title && value && address && rooms && bathrooms && garageCapacity) {
+        try {
+            await db.runAsync(`
+                UPDATE properties
+                SET title = $title,
+                    value = $value,
+                    address = $address,
+                    rooms = $rooms,
+                    bathrooms = $bathrooms,
+                    garage_capacity = $garageCapacity
+                WHERE id = $id;
+            `, {
+                $id: id,
+                $title: title,
+                $value: value,
+                $address: address,
+                $rooms: rooms,
+                $bathrooms: bathrooms,
+                $garageCapacity: garageCapacity
+            });
+            console.log('Property updated successfully', id);
+        } catch (error) {
+            console.error('Error updating property:', error);
+        }
+    } else {
+        console.error('One or more parameters are invalid:', { id, title, value, address, rooms, bathrooms, garageCapacity });
+    }
+}

@@ -10,7 +10,6 @@ export default function CreatePropertie(){
             headerTitle: 'Create propertie'
         }}
         />
-        <Text>Create propertie!</Text>
         <PropertieForm/>
         </View>
     )

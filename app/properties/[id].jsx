@@ -7,10 +7,9 @@ export default function EditPropertie(){
         <View>
         <Stack.Screen
         options={{
-            headerTitle: 'Create propertie'
+            headerTitle: 'Edit propertie'
         }}
         />
-        <Text>Create propertie!</Text>
         <PropertieForm/>
         </View>
     )
