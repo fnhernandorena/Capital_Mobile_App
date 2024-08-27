@@ -50,9 +50,11 @@ export default function Index() {
         <ScrollView>
           {saves.map((save) => (
             <View className="flex" key={save.id}>
-              <View className="flex flex-row justify-between items-center w-full">
                 <Text className="text-3xl">{save.title}</Text>
-                <View className="flex flex-row gap-2 mr-2">
+              <Text className="text-zinc-600">Location: {save.location}</Text>
+                <Text className="text-xl">{save.currency} {save.amount}</Text>
+              <View className="flex flex-row">
+                <View className="p-1 w-1/2">
                   <Link
                     href={{
                       pathname: "/saves/[id]",
@@ -60,32 +62,34 @@ export default function Index() {
                     }}
                     asChild
                   >
-                    <Pressable>
+                    <Pressable className="bg-yellow-600 flex flex-row items-center p-1 rounded-full justify-center">
                       <FontAwesome
                         name="pencil-square-o"
-                        size={28}
-                        color="black"
+                        size={20}
+                        color="white"
                       />
+                      <Text className="text-white mx-1">Edit</Text>
                     </Pressable>
                   </Link>
-                  <Pressable onPress={() => deleteSave(save.id)}>
-                    <FontAwesome name="trash" size={28} color="black" />
+                </View>
+                <View className="p-1 w-1/2">
+                  <Pressable
+                    className="bg-red-600 flex flex-row items-center p-1 rounded-full justify-center"
+                    onPress={() => deleteSave(save.id)}
+                  >
+                    <FontAwesome name="trash" size={20} color="white" />
+                    <Text className="text-white mx-1">Delete</Text>
                   </Pressable>
                 </View>
               </View>
-              <View className="flex w-full flex-row flex-wrap">
-                <Text className="w-1/2">Currency: {save.currency}</Text>
-                <Text className="w-1/2">Amount: {save.amount}</Text>
-              </View>
-              <Text className="text-xl">Location: {save.location}</Text>
             </View>
           ))}
         </ScrollView>
       )}
 
       <Link asChild href="/saves/createSave">
-        <Pressable className="bg-gray-500/30 items-center flex p-1 rounded-3xl mb-1">
-          <FontAwesome name="plus-circle" size={24} color="black" />
+        <Pressable className="bg-green-600 items-center flex p-1 rounded-3xl mb-1">
+          <FontAwesome name="plus-circle" size={24} color="white" />
         </Pressable>
       </Link>
     </ScreenLayout>

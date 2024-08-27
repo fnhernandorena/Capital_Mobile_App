@@ -3,7 +3,11 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { ScreenLayout } from "../../components/ScreenLayout";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
-import { GetValueObjects, StartDB, DeleteValueObject } from "../../utils/ValueObjectsDb";
+import {
+  GetValueObjects,
+  StartDB,
+  DeleteValueObject,
+} from "../../utils/ValueObjectsDb";
 
 export default function Index() {
   const [valueObjects, setValueObjects] = useState(null);
@@ -50,9 +54,16 @@ export default function Index() {
         <ScrollView>
           {valueObjects.map((valueObject) => (
             <View className="flex" key={valueObject.id}>
-              <View className="flex flex-row justify-between items-center w-full">
                 <Text className="text-3xl">{valueObject.title}</Text>
-                <View className="flex flex-row gap-2 mr-2">
+              <Text className="text-xl text-zinc-600">
+                Description: {valueObject.description}
+              </Text>
+              <View className="flex w-full flex-row flex-wrap">
+                <Text className="w-1/2 text-xl">Quantity: {valueObject.quantity}</Text>
+                <Text className="w-1/2 text-xl">Value: {valueObject.value}</Text>
+              </View>
+              <View className="flex flex-row">
+                <View className="p-1 w-1/2">
                   <Link
                     href={{
                       pathname: "/valueObjects/[id]",
@@ -60,32 +71,34 @@ export default function Index() {
                     }}
                     asChild
                   >
-                    <Pressable>
+                    <Pressable className="bg-yellow-600 flex flex-row items-center p-1 rounded-full justify-center">
                       <FontAwesome
                         name="pencil-square-o"
-                        size={28}
-                        color="black"
+                        size={20}
+                        color="white"
                       />
+                      <Text className="text-white mx-1">Edit</Text>
                     </Pressable>
                   </Link>
-                  <Pressable onPress={() => deleteValueObject(valueObject.id)}>
-                    <FontAwesome name="trash" size={28} color="black" />
+                </View>
+                <View className="p-1 w-1/2">
+                  <Pressable
+                    className="bg-red-600 flex flex-row items-center p-1 rounded-full justify-center"
+                    onPress={() => deleteValueObject(valueObject.id)}
+                  >
+                    <FontAwesome name="trash" size={20} color="white" />
+                    <Text className="text-white mx-1">Delete</Text>
                   </Pressable>
                 </View>
               </View>
-              <View className="flex w-full flex-row flex-wrap">
-                <Text className="w-1/2">Quantity: {valueObject.quantity}</Text>
-                <Text className="w-1/2">Value: {valueObject.value}</Text>
-              </View>
-              <Text className="text-xl">Description: {valueObject.description}</Text>
             </View>
           ))}
         </ScrollView>
       )}
 
       <Link asChild href="/valueObjects/createValueObject">
-        <Pressable className="bg-gray-500/30 items-center flex p-1 rounded-3xl mb-1">
-          <FontAwesome name="plus-circle" size={24} color="black" />
+        <Pressable className="bg-green-600 items-center flex p-1 rounded-3xl mb-1">
+          <FontAwesome name="plus-circle" size={24} color="white" />
         </Pressable>
       </Link>
     </ScreenLayout>

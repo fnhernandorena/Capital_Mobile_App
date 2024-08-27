@@ -7,6 +7,7 @@ export default function Layout() {
       <Stack
         screenOptions={{
           title: 'Capital App',
+          headerBackTitleVisible: false
         }}
       />
     </View>
